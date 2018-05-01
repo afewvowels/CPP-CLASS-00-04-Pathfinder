@@ -1,7 +1,12 @@
 #ifndef _PATHFINDER_H
 #define _PATHFINDER_H
 
+#include <iostream>
+#include <stdlib.h>
+#include <bitset>
+#include "DisjointSet.h"
 #include <random>
+#include "stack.h"
 
 using namespace std;
 

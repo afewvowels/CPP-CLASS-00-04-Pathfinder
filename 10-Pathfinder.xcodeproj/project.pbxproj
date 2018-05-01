@@ -10,6 +10,7 @@
 		25C1296520921F4600363F16 /* pathfinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C1296420921F4600363F16 /* pathfinder.cpp */; };
 		25C1296F20921FBA00363F16 /* output.cp in Sources */ = {isa = PBXBuildFile; fileRef = 25C1296E20921FBA00363F16 /* output.cp */; };
 		25CB79392098A726003C7398 /* DisjointSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25CB79382098A726003C7398 /* DisjointSet.cpp */; };
+		25CB793D2098EC67003C7398 /* exceptions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 25CB793C2098EC67003C7398 /* exceptions.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,9 @@
 		25C1297020921FC000363F16 /* pathfinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pathfinder.h; sourceTree = "<group>"; };
 		25CB79372098A519003C7398 /* DisjointSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisjointSet.h; sourceTree = "<group>"; };
 		25CB79382098A726003C7398 /* DisjointSet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DisjointSet.cpp; sourceTree = "<group>"; };
+		25CB793A2098DEBC003C7398 /* stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		25CB793B2098EC62003C7398 /* exceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = exceptions.h; sourceTree = "<group>"; };
+		25CB793C2098EC67003C7398 /* exceptions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exceptions.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 		25C1296B20921F4C00363F16 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				25CB793C2098EC67003C7398 /* exceptions.cc */,
 				25C1296E20921FBA00363F16 /* output.cp */,
 				25C1296420921F4600363F16 /* pathfinder.cpp */,
 				25CB79382098A726003C7398 /* DisjointSet.cpp */,
@@ -83,6 +88,8 @@
 		25C1296C20921F5100363F16 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				25CB793B2098EC62003C7398 /* exceptions.h */,
+				25CB793A2098DEBC003C7398 /* stack.h */,
 				25CB79372098A519003C7398 /* DisjointSet.h */,
 				25C1297020921FC000363F16 /* pathfinder.h */,
 			);
@@ -156,6 +163,7 @@
 				25CB79392098A726003C7398 /* DisjointSet.cpp in Sources */,
 				25C1296520921F4600363F16 /* pathfinder.cpp in Sources */,
 				25C1296F20921FBA00363F16 /* output.cp in Sources */,
+				25CB793D2098EC67003C7398 /* exceptions.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

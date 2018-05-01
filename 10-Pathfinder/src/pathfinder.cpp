@@ -6,12 +6,7 @@
 //  Copyright © 2018 Keith Smith. All rights reserved.
 //
 
-#include <iostream>
 #include "pathfinder.h"
-#include <stdlib.h>
-#include <bitset>
-#include "DisjointSet.h"
-#include <random>
 
 int sampleNoReplacement(int items[],int &n) {
     default_random_engine generator;
@@ -84,7 +79,7 @@ void generateMaze(uint8_t mazePrime[], int nR, int nC) {
     
     int i = 0;
     
-    for(int r = 0; i < nR; r++) {
+    for(int r = 0; r < nR; r++) {
         for(int c = 0; c < nC; c++) {
             mazePrime[encode(r,nR,c,nC,0)] = 15;
             for(int d = 0; d < 4; d++) {
@@ -93,7 +88,7 @@ void generateMaze(uint8_t mazePrime[], int nR, int nC) {
             }
         }
     }
-    /*
+
     DisjointSet disjointSet = *new DisjointSet(nR*nC, nR, nC);
 
     i = 0;
@@ -112,10 +107,6 @@ void generateMaze(uint8_t mazePrime[], int nR, int nC) {
 
         do {
             do {
-                if(numItems == 0) {
-                    e = 0;
-                    break;
-                }
 
                 e = sampleNoReplacement(items, numItems);
                 cout << "Sampling" << endl;
@@ -182,6 +173,10 @@ void generateMaze(uint8_t mazePrime[], int nR, int nC) {
             room1 = setBit(room1, 1, 0);
             room2 = setBit(room2, 3, 0);
         }
+        else if(decodeRow(room1, nC) == decodeRow(room2, nC) && decodeColumn(room1, nC) == decodeColumn(room2, nC)) {
+            room1 = room2;
+            cout << "Same room" << endl;
+        }
         else {
             cout << "ERROR REMOVING WALL" << endl;
         }
@@ -190,7 +185,56 @@ void generateMaze(uint8_t mazePrime[], int nR, int nC) {
         mazePrime[encode(decodeRow(room2, nC), nR, decodeColumn(room2, nC), nC, 0)] = room2;
 
         cout << "wall removed" << endl;
-    }*/
+    }
+}
+
+void findPath(uint8_t mazePrime[], int nR, int nC) {
+    Stack<uint8_t> s;
+    
+    s.push(encode(0,nR,0,nC,0));
+    
+    while(!s.isEmpty()) {
+        int r = decodeRow(s.peek(), nC);
+        int c = decodeColumn(s.peek(), nC);
+        int d = decodeDirection(s.peek());
+        
+        if(r == (nR-1) && c == (nC-1)) {
+            break;
+        }
+        
+        if(d == 4) {
+            
+            s.pop();
+        }
+        else {
+            int rNext;
+            int cNext;
+            
+            if(d == 0) {
+                rNext = r-1;
+                cNext = c;
+            }
+            else if(d == 1) {
+                rNext = r;
+                cNext = c + 1;
+            }
+            else if(d == 2) {
+                rNext = r + 1;
+                cNext = c;
+            }
+            else if(d == 3) {
+                rNext = r;
+                cNext = c - 1;
+            }
+            
+            s.pop();
+            s.push(encode(r,nR,c,nC,(d+1)));
+            if(!isBitSet(mazePrime[encode(r,nR,c,nC,0)], d) && decodeDirection(encode(rNext,nR,cNext,nC,0)) != 4) {
+                s.push(encode(rNext,nR,cNext,nC,0));
+                mazePrime[encode(rNext,nR,cNext,nC,0)] = 10;
+            }
+        }
+    }
 }
 
 void copyMaze(uint8_t mazePrime[], uint8_t maze[][MAX_COLS], int nR, int nC) {
