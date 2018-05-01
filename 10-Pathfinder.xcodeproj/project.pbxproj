@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25C1296520921F4600363F16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C1296420921F4600363F16 /* main.cpp */; };
+		25C1296520921F4600363F16 /* pathfinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C1296420921F4600363F16 /* pathfinder.cpp */; };
+		25C1296F20921FBA00363F16 /* output.cp in Sources */ = {isa = PBXBuildFile; fileRef = 25C1296E20921FBA00363F16 /* output.cp */; };
+		25CB79392098A726003C7398 /* DisjointSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25CB79382098A726003C7398 /* DisjointSet.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +26,11 @@
 
 /* Begin PBXFileReference section */
 		25C1296120921F4600363F16 /* 10-Pathfinder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "10-Pathfinder"; sourceTree = BUILT_PRODUCTS_DIR; };
-		25C1296420921F4600363F16 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		25C1296420921F4600363F16 /* pathfinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pathfinder.cpp; sourceTree = "<group>"; };
+		25C1296E20921FBA00363F16 /* output.cp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output.cp; sourceTree = "<group>"; };
+		25C1297020921FC000363F16 /* pathfinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pathfinder.h; sourceTree = "<group>"; };
+		25CB79372098A519003C7398 /* DisjointSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisjointSet.h; sourceTree = "<group>"; };
+		25CB79382098A726003C7398 /* DisjointSet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DisjointSet.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +63,37 @@
 		25C1296320921F4600363F16 /* 10-Pathfinder */ = {
 			isa = PBXGroup;
 			children = (
-				25C1296420921F4600363F16 /* main.cpp */,
+				25C1296D20921F5300363F16 /* lib */,
+				25C1296C20921F5100363F16 /* include */,
+				25C1296B20921F4C00363F16 /* src */,
 			);
 			path = "10-Pathfinder";
+			sourceTree = "<group>";
+		};
+		25C1296B20921F4C00363F16 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				25C1296E20921FBA00363F16 /* output.cp */,
+				25C1296420921F4600363F16 /* pathfinder.cpp */,
+				25CB79382098A726003C7398 /* DisjointSet.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		25C1296C20921F5100363F16 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				25CB79372098A519003C7398 /* DisjointSet.h */,
+				25C1297020921FC000363F16 /* pathfinder.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		25C1296D20921F5300363F16 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +153,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25C1296520921F4600363F16 /* main.cpp in Sources */,
+				25CB79392098A726003C7398 /* DisjointSet.cpp in Sources */,
+				25C1296520921F4600363F16 /* pathfinder.cpp in Sources */,
+				25C1296F20921FBA00363F16 /* output.cp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
