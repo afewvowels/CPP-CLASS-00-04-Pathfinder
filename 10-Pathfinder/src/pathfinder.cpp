@@ -236,7 +236,7 @@ void findPath(uint8_t maze[][MAX_COLS], int nR, int nC) {
             int cNext;
             
             if(d == 0 && r != 0) {
-                rNext = r-1;
+                rNext = r - 1;
                 cNext = c;
             }
             else if(d == 1 && c != (nC-1)) {
@@ -269,7 +269,15 @@ void findPath(uint8_t maze[][MAX_COLS], int nR, int nC) {
                 maze[rNext][cNext] != unsigned(24) && maze[rNext][cNext] != unsigned(25) &&
                 maze[rNext][cNext] != unsigned(26) && maze[rNext][cNext] != unsigned(27) &&
                 maze[rNext][cNext] != unsigned(28) && maze[rNext][cNext] != unsigned(29) &&
-                maze[rNext][cNext] != unsigned(30) && maze[rNext][cNext] != unsigned(31))) {
+                maze[rNext][cNext] != unsigned(30) && maze[rNext][cNext] != unsigned(31) &&
+                maze[rNext][cNext] != unsigned(32) && maze[rNext][cNext] != unsigned(33) &&
+                maze[rNext][cNext] != unsigned(34) && maze[rNext][cNext] != unsigned(35) &&
+                maze[rNext][cNext] != unsigned(36) && maze[rNext][cNext] != unsigned(37) &&
+                maze[rNext][cNext] != unsigned(38) && maze[rNext][cNext] != unsigned(39) &&
+                maze[rNext][cNext] != unsigned(40) && maze[rNext][cNext] != unsigned(41) &&
+                maze[rNext][cNext] != unsigned(42) && maze[rNext][cNext] != unsigned(43) &&
+                maze[rNext][cNext] != unsigned(44) && maze[rNext][cNext] != unsigned(45) &&
+                maze[rNext][cNext] != unsigned(46) && maze[rNext][cNext] != unsigned(47))) {
                    
                    cout << "Pushed rNext " << rNext << " cNext " << cNext << endl;
                    s.push(encode(rNext,nR,cNext,nC,0));
@@ -289,24 +297,9 @@ int main(int argc, const char * argv[]) {
     
     generateMaze(maze,nR,nC);
     
-//    uint8_t items[16];
-//
-//    for(int i = 0; i < 16; i++) {
-//        items[i] = i;
-//        items[i] |= DEAD_END;
-//        cout << unsigned(items[i]) << endl;
-//    }
-    
     cout << "Find path" << endl;
 
     findPath(maze,nR,nC);
-    
-    for(int r = 0; r < nR; r++) {
-        for(int c = 0; c < nC; c++) {
-            cout << unsigned(maze[r][c]) << " | ";
-        }
-        cout << endl;
-    }
     
     cout << "Print maze" << endl;
     
