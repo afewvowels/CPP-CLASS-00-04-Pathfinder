@@ -17,6 +17,10 @@ public:
     int disjointSetFind(int element);
     
     void setElementsArr(int index, int value);
+    
+    int encode(int row, int col);
+    int decodeRow(int n);
+    int decodeColumn(int n);
 private:
     int count;
     
@@ -25,10 +29,6 @@ private:
     
     int elements[2500];
     int rank[2500];
-    
-    int encode(int row, int col);
-    int decodeRow(int n);
-    int decodeColumn(int n);
 };
 
 #endif /* disjointSet_h */
