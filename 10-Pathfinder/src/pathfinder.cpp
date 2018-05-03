@@ -42,23 +42,23 @@ bool isBitSet(u_int8_t bitToCheck, unsigned int position) {
     return (bitToCheck & 1) != 0;
 }
 
-int encode(int r,int nR,int c,int nC,int d) {
-    return (r*nC+c) * 4 + d;
+uint8_t encode(uint8_t r, uint8_t nR, uint8_t c, uint8_t nC, uint8_t d) {
+    return c + nC * (r + nR * d);
 }
 
-int decodeDirection(int coded) {
-    return coded % 4;
+uint8_t decodeDirection(uint8_t coded, uint8_t nR, uint8_t nC) {
+    return coded / (nR * nC);
 }
 
-int decodeColumn(int coded, int nC) {
-    return (coded/4) % nC;
+uint8_t decodeColumn(uint8_t coded, uint8_t nR, uint8_t nC) {
+    return coded % nC;
 }
 
-int decodeRow(int coded, int nC) {
-    return (coded/(4*nC));
+uint8_t decodeRow(uint8_t coded, uint8_t nR, uint8_t nC) {
+    return (coded / nC) % nR;
 }
 
-void generateMaze(uint8_t maze[][MAX_COLS], int nR, int nC) {
+void generateMaze(uint8_t maze[][MAX_COLS], uint8_t nR, uint8_t nC) {
     random_device rd;
     default_random_engine generator(rd());
     uniform_int_distribution<int> distribution(0,130000);
@@ -90,17 +90,17 @@ void generateMaze(uint8_t maze[][MAX_COLS], int nR, int nC) {
         int room1;
         int room2;
 
-        int r;
-        int c;
-        int d;
+        uint8_t r;
+        uint8_t c;
+        uint8_t d;
         
         int randomValue = distribution(generator);
         
         e = sampleNoReplacement(items, count, randomValue);
         
-        r = decodeRow(e, nC);
-        c = decodeColumn(e, nC);
-        d = decodeDirection(e);
+        r = decodeRow(e, nR, nC);
+        c = decodeColumn(e, nR, nC);
+        d = decodeDirection(e, nR, nC);
         
         if((r == 0 && d == 0) ||
            (r == (nR-1) && d == 2) ||
@@ -210,56 +210,59 @@ void generateMaze(uint8_t maze[][MAX_COLS], int nR, int nC) {
     delete [] items;
 }
 
-void findPath(uint8_t maze[][MAX_COLS], int nR, int nC) {
+void findPath(uint8_t maze[][MAX_COLS], uint8_t nR, uint8_t nC) {
     Stack<uint8_t> s;
+    
+    uint8_t r;
+    uint8_t c;
+    uint8_t d;
+    
+    int rNext;
+    int cNext;
     
     s.push(encode(0,nR,0,nC,0));
     
     maze[0][0] |= VISITED;
     
     while(!s.isEmpty()) {
-        int r = decodeRow(s.peek(), nC);
-        int c = decodeColumn(s.peek(), nC);
-        int d = decodeDirection(s.peek());
+        r = decodeRow(s.peek(), nR, nC);
+        c = decodeColumn(s.peek(), nR, nC);
+        d = decodeDirection(s.peek(), nR, nC);
+        cout << "Decode value " << unsigned(s.peek()) << endl;
+        cout << "Decoded R " << unsigned(r) << " C " << unsigned(c) << " D " << unsigned(d) << endl;
         
         if(r == (nR-1) && c == (nC-1)) {
             break;
         }
         
-        if((d+1) == 4) {
+        if(d == 4) {
             maze[r][c] |= DEAD_END;
             s.pop();
             cout << "Dead end" << endl;
         }
         else {
-            int rNext;
-            int cNext;
-            
-            if(d == 0 && r != 0) {
+            if(d == 0) {
                 rNext = r - 1;
                 cNext = c;
             }
-            else if(d == 1 && c != (nC-1)) {
+            else if(d == 1) {
                 rNext = r;
                 cNext = c + 1;
             }
-            else if(d == 2 && r != (nR-1)) {
+            else if(d == 2) {
                 rNext = r + 1;
                 cNext = c;
             }
-            else if(d == 3 && c != 0) {
+            else if(d == 3) {
                 rNext = r;
                 cNext = c - 1;
             }
-            else {
-                s.pop();
-                s.push(encode(r,nR,c,nC,d+1));
-                cout << "continue" << endl;
-                continue;
-            }
             
+            cout << "R " << unsigned(r) << " C " << unsigned(c) << endl;
             s.pop();
             s.push(encode(r,nR,c,nC,d+1));
+            cout << "Encode value " << unsigned(encode(r,nR,c,nC,d+1)) << endl;
+            cout << "Encoded R " << unsigned(r) << " C " << unsigned(c) << " D " << unsigned(d+1) << endl;
             
             if(!isBitSet(maze[r][c], d) &&
                (maze[rNext][cNext] != unsigned(16) && maze[rNext][cNext] != unsigned(17) &&
@@ -278,8 +281,6 @@ void findPath(uint8_t maze[][MAX_COLS], int nR, int nC) {
                 maze[rNext][cNext] != unsigned(42) && maze[rNext][cNext] != unsigned(43) &&
                 maze[rNext][cNext] != unsigned(44) && maze[rNext][cNext] != unsigned(45) &&
                 maze[rNext][cNext] != unsigned(46) && maze[rNext][cNext] != unsigned(47))) {
-                   
-                   cout << "Pushed rNext " << rNext << " cNext " << cNext << endl;
                    s.push(encode(rNext,nR,cNext,nC,0));
                    maze[rNext][cNext] |= VISITED;
             }
@@ -288,8 +289,8 @@ void findPath(uint8_t maze[][MAX_COLS], int nR, int nC) {
 }
 
 int main(int argc, const char * argv[]) {
-    int nR = atoi(argv[1]);
-    int nC = atoi(argv[2]);
+    uint8_t nR = atoi(argv[1]);
+    uint8_t nC = atoi(argv[2]);
     
     uint8_t maze[MAX_ROWS][MAX_COLS];
     
